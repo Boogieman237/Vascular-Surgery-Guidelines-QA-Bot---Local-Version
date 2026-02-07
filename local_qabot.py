@@ -4,12 +4,16 @@ This version runs completely locally without cloud dependencies
 Uses: Ollama for LLM and HuggingFace for embeddings
 """
 
-from langchain_community.llms import Ollama
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_ollama import OllamaLLM # New package
+from langchain_huggingface import HuggingFaceEmbeddings # New package
+from langchain_chroma import Chroma # New package
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
 from langchain_community.document_loaders import PyMuPDFLoader
-from langchain.chains.retrieval_qa.base import RetrievalQA
+from langchain.chains import RetrievalQA
+
+# Note: RetrievalQA is being replaced by 'create_retrieval_chain', 
+# but updating the imports above will fix your immediate error.
+
 import gradio as gr
 import os
 import glob
