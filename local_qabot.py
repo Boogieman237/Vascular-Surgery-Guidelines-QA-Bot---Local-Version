@@ -44,7 +44,7 @@ os.makedirs(VECTOR_DB_DIRECTORY, exist_ok=True)
 def get_local_llm():
     """Initialize local LLM using Ollama"""
     try:
-        llm = Ollama(
+        llm = OllamaLLM(
             model=OLLAMA_MODEL,
             temperature=0.3,
             num_predict=512,  # Max tokens to generate
