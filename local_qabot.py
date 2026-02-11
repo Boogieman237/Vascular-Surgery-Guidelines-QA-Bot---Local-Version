@@ -151,6 +151,11 @@ def create_or_load_vector_database(force_recreate=False):
 def initialize_system():
     """Initialize the QA system"""
     global global_vectordb
+    
+    # Check if already initialized
+    if global_vectordb is not None:
+        return "✓ System already initialized! Ready to answer questions."
+    
     try:
         # Test Ollama connection
         try:
@@ -160,11 +165,11 @@ def initialize_system():
         except Exception as e:
             return f"✗ Ollama not available: {str(e)}\nPlease install Ollama from https://ollama.ai and run: ollama pull {OLLAMA_MODEL}"
         
-        global_vectordb = create_or_load_vector_database()
-        return "✓ System initialized successfully!"
+        global_vectordb = create_or_load_vector_database(force_recreate=False)  # CHANGED: False instead of no parameter
+        return "✓ System initialized successfully! You can now ask questions."
     except Exception as e:
         return f"✗ Error initializing system: {str(e)}"
-
+        
 def add_new_pdf(pdf_file):
     """Add a new PDF to the system"""
     global global_vectordb
@@ -173,16 +178,29 @@ def add_new_pdf(pdf_file):
         return "Please upload a PDF file"
     
     try:
-        filename = os.path.basename(pdf_file.name)
+        # Get filename
+        if hasattr(pdf_file, 'name'):
+            filename = os.path.basename(pdf_file.name)
+            source_path = pdf_file.name
+        else:
+            filename = os.path.basename(pdf_file)
+            source_path = pdf_file
+            
         destination = os.path.join(PDF_DIRECTORY, filename)
         
-        with open(pdf_file.name, 'rb') as src:
-            with open(destination, 'wb') as dst:
-                dst.write(src.read())
+        # Check if file already exists
+        if os.path.exists(destination):
+            return f"⚠️  {filename} already exists in database. Please reinitialize system to update."
         
+        # Copy file
+        import shutil
+        shutil.copy2(source_path, destination)
+        
+        # Force recreate ONLY if a new file was added
+        global_vectordb = None  # Reset global
         global_vectordb = create_or_load_vector_database(force_recreate=True)
         
-        return f"✓ Successfully added {filename} to the database!"
+        return f"✓ Successfully added {filename} to the database!\nTotal documents: {global_vectordb._collection.count()}"
     except Exception as e:
         return f"✗ Error adding PDF: {str(e)}"
 
