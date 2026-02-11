@@ -10,6 +10,7 @@ from langchain_chroma import Chroma # New package
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyMuPDFLoader
 from langchain_classic.chains import RetrievalQA
+from langchain_core.prompts import PromptTemplate
 
 # Note: RetrievalQA is being replaced by 'create_retrieval_chain', 
 # but updating the imports above will fix your immediate error.
@@ -202,7 +203,6 @@ def answer_question(query, num_sources=3):
         )
         
         # Custom prompt for medical context
-        from langchain.prompts import PromptTemplate
         
         prompt_template = """You are a medical assistant specialized in vascular surgery and diabetic foot guidelines. 
         Use the following pieces of context to answer the question at the end. 
