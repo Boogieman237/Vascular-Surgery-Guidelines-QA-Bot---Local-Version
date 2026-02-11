@@ -32,7 +32,7 @@ PDF_DIRECTORY = "./medical_pdfs"
 VECTOR_DB_DIRECTORY = "./vector_db_local"
 
 # Ollama model to use (make sure it's installed)
-OLLAMA_MODEL = "llama2"  # or "mistral", "llama3", etc.
+OLLAMA_MODEL = "phi3"  # or "mistral", "llama3", etc.
 
 # Create directories
 os.makedirs(PDF_DIRECTORY, exist_ok=True)
@@ -65,7 +65,7 @@ def get_local_embeddings():
     # Using a lightweight but effective model
     embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2",
-        model_kwargs={'device': 'cpu'},  # Use 'cuda' if you have GPU
+        model_kwargs={'device': 'cuda'},  # Use 'cuda' if you have GPU
         encode_kwargs={'normalize_embeddings': True}
     )
     return embeddings
