@@ -9,7 +9,7 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_chroma import Chroma # New package
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyMuPDFLoader
-from langchain.chains.retrieval_qa.base import RetrievalQA
+from langchain_classic.chains import RetrievalQA
 
 # Note: RetrievalQA is being replaced by 'create_retrieval_chain', 
 # but updating the imports above will fix your immediate error.
