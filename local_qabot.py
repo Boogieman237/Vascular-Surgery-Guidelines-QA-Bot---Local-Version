@@ -47,7 +47,7 @@ def get_local_llm():
     try:
         llm = OllamaLLM(
             model=OLLAMA_MODEL,
-            temperature=0.3,
+            temperature=0.5,
             num_predict=512,  # Max tokens to generate
         )
         return llm
