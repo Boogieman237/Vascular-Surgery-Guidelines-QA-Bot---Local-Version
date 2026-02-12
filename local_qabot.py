@@ -114,7 +114,7 @@ def text_splitter_func(data):
 
 global_vectordb = None
 
-def create_or_load_vector_database(force_recreate=False):
+def create_or_load_vector_database(force_recreate=True):
     """Create or load persistent vector database"""
     embedding_model = get_local_embeddings()
     
