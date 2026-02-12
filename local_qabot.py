@@ -32,7 +32,7 @@ PDF_DIRECTORY = "./medical_pdfs"
 VECTOR_DB_DIRECTORY = "./vector_db_local"
 
 # Ollama model to use (make sure it's installed)
-OLLAMA_MODEL = "phi3"  # or "mistral", "llama3", etc.
+OLLAMA_MODEL = "llama2"  # or "mistral", "llama3", etc.
 
 # Create directories
 os.makedirs(PDF_DIRECTORY, exist_ok=True)
